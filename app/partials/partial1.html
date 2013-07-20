@@ -1,1 +1,23 @@
-<p>This is the partial for view 1.</p>
+<!-- Example row of columns -->
+<div class="row">
+    <div ng-repeat="meter in meters" class="span4">
+        <h2>{{ meter.title }}</h2>
+
+        <div class="well ">
+            <p><strong>{{ meter.count }}</strong></p>
+            <p><span class="badge badge-success">{{ meter.comparedToLastMonth }}%</span> zum Vormonat</p>
+            <p><span class="badge badge-important">+{{ meter.comparedToLastYear }}%</span> zum Vorjahresmonat</p>
+            <div class="muted">{{ meter.dateLastRead }}</div>
+        </div>
+
+        <a class="btn" href="#{{ meter.link }}">Details &raquo;</a>
+        <button class="btn btn-success"><i class="icon-plus"></i> Stand erfassen</button>
+
+    </div>
+</div>
+
+<div class="row" style="margin-top: 20px">
+    <div class="span12">
+        <button class="btn-large btn"><i class="icon-plus"></i> Zähler hinzufügen</button>
+    </div>
+</div>
