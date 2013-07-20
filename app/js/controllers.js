@@ -3,13 +3,19 @@
 /* Controllers */
 
 angular.module ('meterea.controllers', []).
-    controller ('OverviewCtrl', ['$scope', 'Meter', function (scope, Meter) {
 
-    scope.meters = Meter.query();
 
-}])
-    .controller ('MyCtrl2', ['$scope', function (scope) {
-}])
+    controller (
+    'OverviewCtrl', ['$scope', 'Meter', function (scope, Meter) {
+        scope.meters = Meter.query ();
+
+    }])
+
+    .controller (
+    'MeterCtrl', ['$scope', '$routeParams', 'Meter', function (scope, routeParams, Meter) {
+        scope.meter = Meter.get ({meterId: routeParams.meterId}, function (meter) {
+        });
+    }])
     .controller ('MainCtrl', ['$scope', '$location', function (scope, location) {
 
 
