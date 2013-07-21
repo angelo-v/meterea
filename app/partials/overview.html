@@ -1,12 +1,12 @@
 <!-- Example row of columns -->
 <div class="row">
-    <div ng-repeat="meter in meters" class="span4">
+    <div ng-repeat="meter in meters| orderBy:'dateLastRead':false" class="span4">
         <h2>{{ meter.title }}</h2>
 
         <div class="well ">
-            <p><strong>{{ meter.count }}</strong></p>
-            <p><span class="badge badge-success">{{ meter.comparedToLastMonth }}%</span> zum Vormonat</p>
-            <p><span class="badge badge-important">+{{ meter.comparedToLastYear }}%</span> zum Vorjahresmonat</p>
+            <p><strong>{{ meter.count }}</strong> {{ meter.unit }}</p>
+            <p><span class="badge badge-success">-5%</span> zum Vormonat</p>
+            <p><span class="badge badge-important">+8%</span> zum Vorjahresmonat</p>
             <div class="muted">{{ meter.dateLastRead }}</div>
         </div>
 

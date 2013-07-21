@@ -1,56 +1,39 @@
 var express = require ('express');
+var request = require ('request');
 
-var meters = [
-    {
-        "title": "Kaltwasser",
-        "count": 12345.67,
-        "dateLastRead": "27.06.2013",
-        "comparedToLastYear": 11,
-        "comparedToLastMonth": -10,
-        "link": "/meters/kaltwasser"
-    },
-    {
-        "title": "Strom",
-        "count": 789.10,
-        "dateLastRead": "27.06.2013",
-        "comparedToLastYear": 7,
-        "comparedToLastMonth": -3,
-        "link": "/meters/strom"
-    },
-    {
-        "title": "Gas",
-        "count": 111213.14,
-        "dateLastRead": "27.06.2013",
-        "comparedToLastYear": 3,
-        "comparedToLastMonth": -2,
-        "link": "/meters/gas"
-    }
-];
-
-var server = express ()
+var server = express ();
 
 server.configure (function () {
         server.use (express.static (__dirname + '/../app'))
     }
-)
+);
 
 
 server.get ('/meters', function (req, res) {
-        res.contentType ('application/json')
-        res.end (JSON.stringify (meters)
-        );
+        res.contentType ('application/json');
+        request.get ({url: 'http://localhost:5984/meterea/_design/overview/_view/all?group=true', json: true}, function (e, r, obj) {
+            var result = [];
+            var index;
+            for (index = 0; index < obj.rows.length; index++) {
+                var meter = obj.rows[index].value;
+                meter.link = '/meters/' + meter.title;
+                result.push (meter);
+            }
+            res.end (JSON.stringify (result));
+        })
+
     }
-)
+);
 
 server.get ('/meters/:meterId', function (req, res) {
-        res.contentType ('application/json')
+        res.contentType ('application/json');
         res.end (JSON.stringify ({
             title: req.params.meterId,
             readings: []
         })
         );
     }
-)
+);
 
 server.listen (8080);
 
