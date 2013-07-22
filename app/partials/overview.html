@@ -16,8 +16,71 @@
     </div>
 </div>
 
-<div class="row" style="margin-top: 20px">
+<div class="row" ng-show="showNewMeterForm">
+    <div class="span8">
+        <h2>Neuer Zähler</h2>
+
+        <div class="well">
+            <form name="newMeterForm" class="form-horizontal">
+
+
+                <div class="control-group">
+                    <label class="control-label" for="title">Bezeichnung</label>
+
+                    <div class="controls">
+                        <input id="title" type="text" name="title" ng-model="title" required
+                               placeholder="Name des neuen Zählers">
+                        <span class="text-error" ng-show="newMeterForm.title.$error.required"> Bitte ausfüllen</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="count">Zählerstand</label>
+
+                    <div class="controls">
+                        <input id="count" type="number" step="any" name="count" ng-model="count" required
+                               placeholder="Aktueller Stand des Zählers">
+                        <span class="text-error" ng-show="newMeterForm.count.$error.required"> Bitte ausfüllen</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="unit">Einheit</label>
+
+                    <div class="controls">
+                        <input id="unit" type="text" name="count" ng-model="unit"
+                               placeholder="Maßeinheit, z.B. kW oder ㎥">
+                        <span class="text-info"> (optional)</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="date">Datum</label>
+
+                    <div class="controls">
+                        <input id="date" type="date" name="date" ng-model="date"
+                               placeholder="Ablesedatum des Zählerstands" required>
+                        <span class="text-error" ng-show="newMeterForm.date.$error.required"> Bitte ausfüllen</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <a class="btn btn-primary">Speichern &raquo;</a>
+                        <a class="btn" ng-click="showNewMeterForm = false">Abbrechen</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="row" ng-show="!showNewMeterForm" style="margin-top: 20px">
     <div class="span12">
-        <button class="btn-large btn"><i class="icon-plus"></i> Zähler hinzufügen</button>
+        <button class="btn-large btn" ng-click="showNewMeterForm = true"><i class="icon-plus"></i> Zähler hinzufügen
+        </button>
     </div>
 </div>
