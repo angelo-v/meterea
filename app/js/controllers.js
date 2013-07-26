@@ -4,11 +4,19 @@
 
 angular.module ('meterea.controllers', []).
 
-
-    controller ('OverviewCtrl', ['$scope', 'Meter',
-    function (scope, Meter) {
+    controller ('OverviewCtrl', ['$scope', '$filter', 'Meter',
+    function (scope, filter, Meter) {
         scope.meters = Meter.query ();
-        scope.date = '2013-07-22'; // TODO: set current date
+        scope.newMeter = {};
+        scope.newMeter.date = filter('date')(new Date(), 'yyyy-MM-dd');
+
+        scope.submitNewMeterForm = function() {
+            Meter.save (scope.newMeter, function () {
+                scope.showNewMeterForm = false;
+                scope.meters = Meter.query ();
+            });
+        };
+
     }]).
 
     controller ('MeterCtrl', ['$scope', '$routeParams', 'Meter',
