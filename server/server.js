@@ -21,18 +21,20 @@ server.get ('/meters', function (req, res) {
                 result.push (meter);
             }
             res.end (JSON.stringify (result));
-        })
-
+        });
     }
 );
 
 server.get ('/meters/:meterId', function (req, res) {
         res.contentType ('application/json');
-        res.end (JSON.stringify ({
-            title: req.params.meterId,
-            readings: []
-        })
-        );
+        request.get ({url: 'http://localhost:5984/meterea/' + req.params.meterId, json: true}, function (error, response, body) {
+            res.end (JSON.stringify ({
+                title: body.title,
+                readings: body.readings,
+                unit: body.unit
+            })
+            );
+        });
     }
 );
 
@@ -43,10 +45,12 @@ server.post ('/meters', function (req, res) {
         json: {
             title: meter.title,
             unit: meter.unit,
-            readings: [{date: meter.date, count: meter.count}]
+            readings: [
+                {date: meter.date, count: meter.count}
+            ]
         }
     }, function (error, response, body) {
-        res.end(JSON.stringify(body)); // TODO: send applicable response
+        res.end (JSON.stringify (body)); // TODO: send applicable response
         console.log (error);
         console.log ('----------------------');
         console.log (response);

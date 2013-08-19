@@ -8,14 +8,23 @@ angular.module ('meterea.controllers', []).
     function (scope, filter, Meter) {
         scope.meters = Meter.query ();
         scope.newMeter = {};
-        scope.newMeter.date = filter('date')(new Date(), 'yyyy-MM-dd');
 
-        scope.submitNewMeterForm = function() {
+        var today = filter ('date') (new Date (), 'yyyy-MM-dd');
+        scope.newMeter.date = today;
+
+
+        scope.submitNewMeterForm = function () {
             Meter.save (scope.newMeter, function () {
                 scope.showNewMeterForm = false;
                 scope.meters = Meter.query ();
             });
         };
+
+        scope.prepareNewReadingForMeter = function (meter) {
+            scope.currentMeter = meter;
+            scope.newReading = {};
+            scope.newReading.date = today;
+        }
 
     }]).
 
