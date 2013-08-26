@@ -38,6 +38,15 @@ server.get ('/meters/:meterId', function (req, res) {
     }
 );
 
+server.get ('/meters/:meterId/readings', function (req, res) {
+        res.contentType ('application/json');
+        request.get ({url: 'http://localhost:5984/meterea/' + req.params.meterId, json: true}, function (error, response, body) {
+            res.end (JSON.stringify (body.readings)
+            );
+        });
+    }
+);
+
 server.post ('/meters', function (req, res) {
     var meter = req.body;
     request.put ({
@@ -57,6 +66,13 @@ server.post ('/meters', function (req, res) {
         console.log ('----------------------');
         console.log (body);
     });
+});
+
+server.post ('/meters/:meterId/readings', function (req, res) {
+    var reading = req.body;
+    console.log ('TODO: update document in DB', reading);
+    res.statusCode = 501; // Not implemented
+    res.end();
 });
 
 server.listen (8080);

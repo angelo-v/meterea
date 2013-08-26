@@ -4,8 +4,8 @@
 
 angular.module ('meterea.controllers', []).
 
-    controller ('OverviewCtrl', ['$scope', '$filter', 'Meter',
-    function (scope, filter, Meter) {
+    controller ('OverviewCtrl', ['$scope', '$filter', 'Meter', 'Reading',
+    function (scope, filter, Meter, Reading) {
         scope.meters = Meter.query ();
         scope.newMeter = {};
 
@@ -24,7 +24,15 @@ angular.module ('meterea.controllers', []).
             scope.currentMeter = meter;
             scope.newReading = {};
             scope.newReading.date = today;
-        }
+        };
+
+        scope.submitNewReading = function () {
+            new Reading({
+                meterId: scope.currentMeter.title,
+                date: scope.newReading.date,
+                count: scope.newReading.count
+            }).$save();
+        };
 
     }]).
 
